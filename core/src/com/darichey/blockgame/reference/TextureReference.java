@@ -5,4 +5,5 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class TextureReference {
 	public static Texture stone = new Texture(Gdx.files.internal("stone.png"));
+	public static Texture player = new Texture(Gdx.files.internal("player.png"));
 }
