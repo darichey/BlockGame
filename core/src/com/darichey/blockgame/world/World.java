@@ -41,10 +41,10 @@ public class World {
 	}
 
 	public Block getBlockAt(Vector2 pos) {
-		return BlockRegistry.getBlockForID(blockMap[(int)pos.x][(int)pos.y]);
+		return BlockRegistry.getBlockForID(blockMap[(int) pos.x][(int) pos.y]);
 	}
 
 	public void setBlockAt(Block block, Vector2 pos) {
-		this.blockMap[(int)pos.x][(int)pos.y] = BlockRegistry.getIDForBlock(block);
+		this.blockMap[(int) pos.x][(int) pos.y] = BlockRegistry.getIDForBlock(block);
 	}
 }
