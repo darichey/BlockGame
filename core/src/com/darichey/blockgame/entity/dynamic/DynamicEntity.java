@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.Entity;
 import com.darichey.blockgame.entity.block.Block;
-import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.world.World;
 
 /**
@@ -42,16 +41,9 @@ public class DynamicEntity extends Entity {
 	 */
 	public boolean isAffectedByGravity = true;
 
-	public DynamicEntity(World world, Vector2 position) {
-		this(world);
-		this.position = position;
-	}
-
-	public DynamicEntity(World world) {
-		this.world = world;
+	DynamicEntity() {
 		this.position = Vector2.Zero;
 		this.velocity = Vector2.Zero;
-		world.getDynamicEntities().add(this);
 	}
 
 	/**
@@ -60,6 +52,22 @@ public class DynamicEntity extends Entity {
 	 */
 	public Vector2 getPosition() {
 		return this.position;
+	}
+
+	/**
+	 * Sets the position of the entity.
+	 * @param position The new position.
+	 */
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+
+	/**
+	 * Sets the world of the entity.
+	 * @param world The world.
+	 */
+	public void setWorld(World world) {
+		this.world = world;
 	}
 
 	/**

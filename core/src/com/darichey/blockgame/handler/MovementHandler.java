@@ -2,8 +2,14 @@ package com.darichey.blockgame.handler;
 
 import com.darichey.blockgame.entity.dynamic.EntityPlayer;
 
+/**
+ * Handles movement for the given player. (Updates the position of the player based on its velocity)
+ */
 public class MovementHandler implements IHandler {
 
+	/**
+	 * The player this handler is handling movement for.
+	 */
 	private EntityPlayer player;
 
 	public MovementHandler(EntityPlayer player) {

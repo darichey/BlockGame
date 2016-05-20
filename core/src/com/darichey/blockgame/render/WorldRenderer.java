@@ -10,15 +10,39 @@ import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.entity.dynamic.DynamicEntity;
 import com.darichey.blockgame.world.World;
 
+/**
+ * Handles the rendering of the current {@link World}.
+ */
 public class WorldRenderer {
+
+	/**
+	 * The World being rendered.
+	 */
 	public static World world;
+
+	/**
+	 * SpriteBatch used to draw to the screen.
+	 */
 	private static SpriteBatch batch = new SpriteBatch();
 
+	/**
+	 * Width the camera's viewport.
+	 */
 	public static float viewportWidth = 40;
+
+	/**
+	 * Height of the camera's viewport.
+	 */
 	public static float viewportHeight = 23;
+
+	/**
+	 * The camera through which the player sees.
+	 */
 	public static OrthographicCamera camera = new OrthographicCamera(viewportWidth, viewportHeight);
 
-
+	/**
+	 * Render the world.
+	 */
 	public static void render() {
 		camera.position.x = world.player.getPosition().x;
 		camera.position.y = world.player.getPosition().y;
@@ -46,6 +70,12 @@ public class WorldRenderer {
 		batch.end();
 	}
 
+	/**
+	 * Whether or not the given entity can be seen at the given world position.
+	 * @param entity The entity.
+	 * @param worldPos The world position.
+	 * @return True if that entity can be seen there, false if otherwise.
+	 */
 	private static boolean entityCanBeeSeenAt(Entity entity, Vector2 worldPos) {
 		Vector3 bottomLeft = camera.project(new Vector3(worldPos.x, worldPos.y, 0));
 		Vector3 topLeft = camera.project(new Vector3(worldPos.x, worldPos.y + entity.height, 0));
@@ -55,6 +85,11 @@ public class WorldRenderer {
 		return screenContainsPos(bottomLeft) || screenContainsPos(topLeft) || screenContainsPos(bottomRight) || screenContainsPos(topRight);
 	}
 
+	/**
+	 * Whether or not the current screen contains the given pixel position.
+	 * @param pos The pixel position.
+	 * @return True if the position if present on the screen, false if otherwise.
+	 */
 	private static boolean screenContainsPos(Vector3 pos) {
 		if (pos.x > 0 && pos.x < Gdx.graphics.getWidth()) {
 			if (pos.y > 0 && pos.y < Gdx.graphics.getHeight()) {

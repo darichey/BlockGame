@@ -8,8 +8,15 @@ import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.render.WorldRenderer;
 import com.darichey.blockgame.world.World;
 
+/**
+ * The screen presented when actually playing the game.
+ */
 public class GameScreen extends ScreenAdapter {
-	World world;
+
+	/**
+	 * The {@link World} the player is currently in.
+	 */
+	private World world;
 
 	public GameScreen() {
 		Blocks.init();
