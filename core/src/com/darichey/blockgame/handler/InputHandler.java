@@ -3,14 +3,28 @@ package com.darichey.blockgame.handler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.darichey.blockgame.entity.dynamic.EntityPlayer;
+import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.render.WorldRenderer;
+import com.darichey.blockgame.world.World;
 
 public class InputHandler extends InputAdapter implements IHandler {
-	private EntityPlayer player;
+	private World world;
 
-	public InputHandler(EntityPlayer player) {
-		this.player = player;
+	public InputHandler(World world) {
+		this.world = world;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		Vector3 tempPos = WorldRenderer.camera.unproject(new Vector3(screenX, screenY, 0));
+		Vector2 worldPos = new Vector2((int)tempPos.x, (int)tempPos.y);
+
+		world.setBlockAt(world.getBlockAt(worldPos) == null ? Blocks.stone : null, worldPos);
+
+		return false;
 	}
 
 	@Override
@@ -28,8 +42,8 @@ public class InputHandler extends InputAdapter implements IHandler {
 		}
 
 		// Jumping
-		if (keycode == Input.Keys.SPACE && player.isOnGround()) {
-			player.getVelocity().add(0, 10);
+		if (keycode == Input.Keys.SPACE && world.player.isOnGround()) {
+			world.player.getVelocity().add(0, 10);
 		}
 		return false;
 	}
@@ -37,11 +51,11 @@ public class InputHandler extends InputAdapter implements IHandler {
 	@Override
 	public void update(float deltaTime) {
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			player.getVelocity().set(player.speed, player.getVelocity().y);
+			world.player.getVelocity().set(world.player.speed, world.player.getVelocity().y);
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-			player.getVelocity().set(-player.speed, player.getVelocity().y);
+			world.player.getVelocity().set(-world.player.speed, world.player.getVelocity().y);
 		}
 	}
 }

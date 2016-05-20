@@ -17,7 +17,7 @@ public class GameScreen extends ScreenAdapter {
 		world = new World();
 		WorldRenderer.world = world;
 
-		InputHandler inputHandler = new InputHandler(world.player);
+		InputHandler inputHandler = new InputHandler(world);
 		MovementHandler movementHandler = new MovementHandler(world.player);
 		CollisionHandler collisionHandler = new CollisionHandler(world);
 		GravityHandler gravityHandler = new GravityHandler(world);

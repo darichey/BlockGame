@@ -16,7 +16,7 @@ public class WorldRenderer {
 
 	public static float viewportWidth = 40;
 	public static float viewportHeight = 23;
-	private static OrthographicCamera camera = new OrthographicCamera(viewportWidth, viewportHeight);
+	public static OrthographicCamera camera = new OrthographicCamera(viewportWidth, viewportHeight);
 
 
 	public static void render() {
