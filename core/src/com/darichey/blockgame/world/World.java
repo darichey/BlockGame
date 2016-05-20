@@ -23,63 +23,13 @@ public class World {
 		for (int[] xRow : blockMap)
 			Arrays.fill(xRow, 0);
 
-		for (int i = 0; i < 5; i++) {
-			setBlockAt(Blocks.stone, i, 0);
+		for (int i = 0; i < World.WIDTH; i++) {
+			setBlockAt(Blocks.stone, new Vector2(i, 5));
 		}
 
-		for (int i = 0; i < 4; i++) {
-			setBlockAt(Blocks.stone, i, 1);
+		for (int i = 5; i < 10; i++) {
+			setBlockAt(Blocks.stone, new Vector2(i, 6));
 		}
-
-		for (int i = 0; i < 3; i++) {
-			setBlockAt(Blocks.stone, i, 2);
-		}
-
-		for (int i = 0; i < 2; i++) {
-			setBlockAt(Blocks.stone, i, 3);
-		}
-
-		for (int i = 0; i < 1; i++) {
-			setBlockAt(Blocks.stone, i, 4);
-		}
-
-		for (int i = 6; i < 11; i++) {
-			setBlockAt(Blocks.stone, i, 0);
-		}
-
-		for (int i = 7; i < 11; i++) {
-			setBlockAt(Blocks.stone, i, 1);
-		}
-
-		for (int i = 8; i < 11; i++) {
-			setBlockAt(Blocks.stone, i, 2);
-		}
-
-		for (int i = 9; i < 11; i++) {
-			setBlockAt(Blocks.stone, i, 3);
-		}
-
-		for (int i = 10; i < 11; i++) {
-			setBlockAt(Blocks.stone, i, 4);
-		}
-
-		/*
-		for (int i = 0; i < 50; i++) {
-			setBlockAt(Blocks.stone, 0, i);
-		}
-
-		for (int i = 1; i < 50; i++) {
-			setBlockAt(Blocks.stone, i, 0);
-		}
-
-		for (int i = 1; i < 50; i++) {
-			setBlockAt(Blocks.stone, i, 49);
-		}
-
-		for (int i = 0; i < 50; i++) {
-			setBlockAt(Blocks.stone, 49, i);
-		}
-		*/
 	}
 
 	public int[][] getBlockMap() {
@@ -90,11 +40,11 @@ public class World {
 		return this.dynamicEntities;
 	}
 
-	public Block getBlockAt(int x, int y) {
-		return BlockRegistry.getBlockForID(blockMap[x][y]);
+	public Block getBlockAt(Vector2 pos) {
+		return BlockRegistry.getBlockForID(blockMap[(int)pos.x][(int)pos.y]);
 	}
 
-	public void setBlockAt(Block block, int x, int y) {
-		this.blockMap[x][y] = BlockRegistry.getIDForBlock(block);
+	public void setBlockAt(Block block, Vector2 pos) {
+		this.blockMap[(int)pos.x][(int)pos.y] = BlockRegistry.getIDForBlock(block);
 	}
 }

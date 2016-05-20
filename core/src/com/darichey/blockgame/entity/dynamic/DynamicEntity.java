@@ -37,4 +37,8 @@ public class DynamicEntity extends Entity {
 	public Rectangle getBounds() {
 		return new Rectangle(getPosition().x, getPosition().y, width, height);
 	}
+
+	public boolean isOnGround() {
+		return (getPosition().y == (int) getPosition().y) && (world.getBlockAt(new Vector2(getPosition().x, getPosition().y - 1)) != null);
+	}
 }

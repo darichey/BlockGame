@@ -1,6 +1,7 @@
 package com.darichey.blockgame.handler;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.world.World;
 
@@ -16,7 +17,7 @@ public class CollisionHandler implements IHandler {
 	public void update(float deltaTime) {
 		for (int x = 0; x < World.WIDTH; x++) {
 			for (int y = 0; y < World.HEIGHT; y++) {
-				Block block = world.getBlockAt(x, y);
+				Block block = world.getBlockAt(new Vector2(x, y));
 				if (block != null) {
 					Rectangle blockBounds = new Rectangle(x, y, block.width, block.height);
 					Rectangle playerBounds = world.player.getBounds();
@@ -24,9 +25,6 @@ public class CollisionHandler implements IHandler {
 					if (playerBounds.overlaps(blockBounds)) {
 						float overlapX = getOverlap1D(playerBounds.x, playerBounds.x + playerBounds.width, blockBounds.x, blockBounds.x + blockBounds.width);
 						float overlapY = getOverlap1D(playerBounds.y, playerBounds.y + playerBounds.height, blockBounds.y, blockBounds.y + blockBounds.height);
-
-						System.out.println("X: " + overlapX);
-						System.out.println("Y: " + overlapY);
 
 						if (overlapX < overlapY) { // x < y so we need to resolve x
 							world.player.getPosition().add(world.player.getVelocity().x > 0 ? -overlapX : overlapX, 0); // add or subtract the overlap depending on which direction the player is moving

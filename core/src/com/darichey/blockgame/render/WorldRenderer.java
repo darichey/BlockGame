@@ -32,7 +32,7 @@ public class WorldRenderer {
 
 		for (int x = 0; x < World.WIDTH; x++) {
 			for (int y = 0; y < World.HEIGHT; y++) {
-				Block block = world.getBlockAt(x, y);
+				Block block = world.getBlockAt(new Vector2(x, y));
 				if (block != null && entityCanBeeSeenAt(block, new Vector2(x, y))) {
 					batch.draw(block.texture, x, y, block.width, block.height);
 				}
