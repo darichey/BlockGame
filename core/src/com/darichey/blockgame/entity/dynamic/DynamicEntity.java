@@ -14,6 +14,8 @@ public class DynamicEntity extends Entity {
 	public float speed;
 	public float dampingSpeed;
 
+	public boolean isAffectedByGravity = true;
+
 	public DynamicEntity(World world, Vector2 position) {
 		this(world);
 		this.position = position;

@@ -13,6 +13,7 @@ import java.util.Arrays;
 public class World {
 	public static final int WIDTH = 100;
 	public static final int HEIGHT = 100;
+	public static final int GRAVITY_VELOCITY = 25;
 
 	private int[][] blockMap = new int[WIDTH][HEIGHT];
 	private ArrayList<DynamicEntity> dynamicEntities = new ArrayList<DynamicEntity>();

@@ -12,12 +12,6 @@ public class MovementHandler implements IHandler {
 
 	@Override
 	public void update(float deltaTime) {
-
-		// Gravity handling
-		if (!player.isOnGround()) {
-			player.getVelocity().sub(0, 25 * deltaTime);
-		}
-
 		player.getPosition().add(player.getVelocity().x * deltaTime, player.getVelocity().y * deltaTime);
 		player.getVelocity().x *= player.dampingSpeed;
 	}
