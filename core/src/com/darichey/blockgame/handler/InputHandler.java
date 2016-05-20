@@ -10,7 +10,14 @@ import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.render.WorldRenderer;
 import com.darichey.blockgame.world.World;
 
+/**
+ * Handles input from the mouse and keyboard.
+ */
 public class InputHandler extends InputAdapter implements IHandler {
+
+	/**
+	 * The world this handler is processing input for.
+	 */
 	private World world;
 
 	public InputHandler(World world) {

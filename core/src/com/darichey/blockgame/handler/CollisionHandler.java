@@ -5,8 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.world.World;
 
+/**
+ * Handles collision between entities in the world.
+ */
 public class CollisionHandler implements IHandler {
 
+	/**
+	 * The world this handler is handling collision for.
+	 */
 	private World world;
 
 	public CollisionHandler(World world) {
@@ -39,6 +45,14 @@ public class CollisionHandler implements IHandler {
 		}
 	}
 
+	/**
+	 * Gets the amount of one-dimensional overlap between two positions.
+	 * @param min1 The minimum of the first line.
+	 * @param max1 The maximum of the first line.
+	 * @param min2 The minimum of the second line.
+	 * @param max2 The maximum of the second line.
+	 * @return The amount of overlap between the two lines.
+	 */
 	private float getOverlap1D(float min1, float max1, float min2, float max2) {
 		return Math.max(0, Math.min(max1, max2) - Math.max(min1, min2));
 	}
