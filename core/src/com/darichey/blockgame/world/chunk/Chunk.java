@@ -96,4 +96,8 @@ public class Chunk {
 	public Vector2 convertChunkToWorldPos(Vector2 chunkPos) {
 		return new Vector2(worldBlockXs.get((int) chunkPos.x), chunkPos.y);
 	}
+
+	public int getPosition() {
+		return this.xPos;
+	}
 }

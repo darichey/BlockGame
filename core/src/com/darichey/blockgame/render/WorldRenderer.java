@@ -55,7 +55,7 @@ public class WorldRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
-		for (Chunk chunk : world.getChunks()) {
+		for (Chunk chunk : world.getLoadedChunks()) {
 			for (int x = 0; x < Chunk.WIDTH; x++) {
 				for (int y = 0; y < Chunk.HEIGHT; y++) {
 					Vector2 worldPos = chunk.convertChunkToWorldPos(new Vector2(x, y));

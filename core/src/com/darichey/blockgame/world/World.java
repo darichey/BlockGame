@@ -11,6 +11,7 @@ import com.darichey.blockgame.world.generation.PerlinNoise;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -22,6 +23,8 @@ public class World {
 	 * The gravity of this world.
 	 */
 	public static final int GRAVITY_VELOCITY = 25;
+
+	private static final int LOAD_RADIUS = 2;
 
 	/**
 	 * A hashmap of the {@link Chunk}s that make up the world. The Integer key is the x-position of the chunk in the world.
@@ -119,7 +122,19 @@ public class World {
 		return chunks.get(x);
 	}
 
-	public ArrayList<Chunk> getChunks() {
+	private ArrayList<Chunk> getChunks() {
 		return new ArrayList<Chunk>(chunks.values());
+	}
+
+	public ArrayList<Chunk> getLoadedChunks() {
+		ArrayList<Chunk> loadedChunks = new ArrayList<Chunk>(5);
+		int playerChunkPos = getChunkForPos(player.getPosition()).getPosition();
+
+		for (Chunk chunk : getChunks()) {
+			if (chunk.getPosition()  >= playerChunkPos - LOAD_RADIUS && chunk.getPosition() <= playerChunkPos + LOAD_RADIUS)
+				loadedChunks.add(chunk);
+		}
+
+		return loadedChunks;
 	}
 }
