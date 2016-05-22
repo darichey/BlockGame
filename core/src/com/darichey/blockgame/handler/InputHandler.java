@@ -57,17 +57,31 @@ public class InputHandler extends InputAdapter implements IHandler {
 		if (keycode == Input.Keys.SPACE && world.player.isOnGround()) {
 			world.player.getVelocity().add(0, 10);
 		}
+
+		if (keycode == Input.Keys.SHIFT_LEFT) {
+			world.player.isWalking = true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		if (keycode == Input.Keys.SHIFT_LEFT) {
+			world.player.isWalking = false;
+		}
+
 		return false;
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			world.player.getVelocity().set(world.player.speed, world.player.getVelocity().y);
+			world.player.getVelocity().set(world.player.speed * (world.player.isWalking ? .5f : 1), world.player.getVelocity().y);
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-			world.player.getVelocity().set(-world.player.speed, world.player.getVelocity().y);
+			world.player.getVelocity().set(-world.player.speed * (world.player.isWalking ? .5f : 1), world.player.getVelocity().y);
 		}
 	}
 }

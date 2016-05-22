@@ -3,6 +3,9 @@ package com.darichey.blockgame.entity.dynamic;
 import com.darichey.blockgame.reference.TextureReference;
 
 public class EntityPlayer extends DynamicEntity {
+
+	public boolean isWalking = false;
+
 	public EntityPlayer() {
 		this.texture = TextureReference.player;
 		this.name = "Player";
