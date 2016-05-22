@@ -51,9 +51,23 @@ public class Chunk {
 
 		for (int[] xRow : blockMap)
 			Arrays.fill(xRow, 0);
+	}
+
+	private void generateTestTerrain() {
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < 120; y++) {
+				setBlockAt(Blocks.stone, new Vector2(x, y));
+			}
+		}
 
 		for (int x = 0; x < WIDTH; x++) {
-			setBlockAt(Blocks.stone, new Vector2(x, 4));
+			for (int y = 120; y < 128; y++) {
+				setBlockAt(Blocks.dirt, new Vector2(x, y));
+			}
+		}
+
+		for (int x = 0; x < WIDTH; x++) {
+			setBlockAt(Blocks.grass, new Vector2(x, 128));
 		}
 	}
 

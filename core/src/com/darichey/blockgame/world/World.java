@@ -4,10 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.entity.dynamic.DynamicEntity;
 import com.darichey.blockgame.entity.dynamic.EntityPlayer;
+import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.world.chunk.Chunk;
+import com.darichey.blockgame.world.generation.PerlinNoise;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Contains all of the entities and other game objects that the player can interact with.
@@ -34,11 +38,25 @@ public class World {
 	 */
 	public EntityPlayer player = (EntityPlayer) spawnEntityAt(new EntityPlayer(), new Vector2(0, 5));
 
+	PerlinNoise noise = new PerlinNoise(new Random().nextLong());
+
 	public World() {
-		for (int i = -8; i < 16; i++) {
+
+		for (int i = -8; i < 8; i++) {
 			Chunk chunk = new Chunk(i);
 			chunks.put(i, chunk);
 		}
+
+		PerlinNoise noise = new PerlinNoise(new Random().nextLong());
+
+		for (int x = -128; x < 128; x++) {
+			int columnHeight = noise.getNoise(x, 320 );
+			for (int y = 0; y < columnHeight; y++) {
+				Block block = (y == columnHeight - 1) ? Blocks.grass : Blocks.dirt;
+				setBlockAt(block, new Vector2(x, y));
+			}
+		}
+
 	}
 
 	/**
