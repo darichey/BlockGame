@@ -1,5 +1,7 @@
 package com.darichey.blockgame.world.generation;
 
+import com.darichey.blockgame.world.chunk.Chunk;
+
 public class PerlinNoise {
 	private long seed;
 
@@ -8,7 +10,7 @@ public class PerlinNoise {
 	}
 
 	public int getNoise(int x, int range) {
-		int selectionSize = 256; // The distance between the selected points
+		int selectionSize = Chunk.WIDTH  * 32; // The distance between the selected points
 		float noise = 0;
 
 		range /= 2;
@@ -33,7 +35,7 @@ public class PerlinNoise {
 	}
 
 	private int random(int x, int range) {
-		return (int) ((x + seed) ^ 5) % range;
+		return (int) ((x + seed) ^ 10) % range;
 	}
 }
 

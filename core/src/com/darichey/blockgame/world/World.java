@@ -50,9 +50,18 @@ public class World {
 		PerlinNoise noise = new PerlinNoise(new Random().nextLong());
 
 		for (int x = -128; x < 128; x++) {
-			int columnHeight = noise.getNoise(x, 320 );
+			int columnHeight = noise.getNoise(x, 256);
 			for (int y = 0; y < columnHeight; y++) {
-				Block block = (y == columnHeight - 1) ? Blocks.grass : Blocks.dirt;
+				Block block;
+				if (y  < columnHeight - 5) {
+					block = Blocks.stone;
+				} else if (y == columnHeight - 1) {
+					block = Blocks.grass;
+				} else {
+					block = Blocks.dirt;
+				}
+				if (y == 0) block = Blocks.bedrock;
+
 				setBlockAt(block, new Vector2(x, y));
 			}
 		}

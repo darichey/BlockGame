@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.darichey.blockgame.entity.dynamic.EntityPlayer;
+import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.render.WorldRenderer;
 import com.darichey.blockgame.world.World;
@@ -28,16 +28,21 @@ public class InputHandler extends InputAdapter implements IHandler {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector3 tempPos = WorldRenderer.camera.unproject(new Vector3(screenX, screenY, 0));
 		Vector2 worldPos = new Vector2((int) Math.floor(tempPos.x), (int) Math.floor(tempPos.y));
+		Block block = world.getBlockAt(worldPos);
 
-		world.setBlockAt(world.getBlockAt(worldPos) == null ? Blocks.stone : null, worldPos);
+		if (block == null)  {
+			world.setBlockAt(Blocks.stone, worldPos);
+		} else if (block.isBreakable) {
+			world.setBlockAt(null, worldPos);
+		}
 
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		WorldRenderer.viewportWidth += amount;
-		WorldRenderer.viewportHeight += amount;
+		WorldRenderer.viewportWidth += 5 * amount;
+		WorldRenderer.viewportHeight += 5 * amount;
 		return true;
 	}
 
