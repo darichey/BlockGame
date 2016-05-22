@@ -4,11 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.entity.dynamic.DynamicEntity;
 import com.darichey.blockgame.entity.dynamic.EntityPlayer;
-import com.darichey.blockgame.init.Blocks;
-import com.darichey.blockgame.register.BlockRegistry;
+import com.darichey.blockgame.world.chunk.Chunk;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Contains all of the entities and other game objects that the player can interact with.
@@ -16,25 +15,14 @@ import java.util.Arrays;
 public class World {
 
 	/**
-	 * The width of the world.
-	 */
-	public static final int WIDTH = 100;
-
-	/**
-	 * The height of the world.
-	 */
-	public static final int HEIGHT = 100;
-
-	/**
 	 * The gravity of this world.
 	 */
 	public static final int GRAVITY_VELOCITY = 25;
 
 	/**
-	 * 2-Dimensional array of block IDs.
-	 * @see BlockRegistry
+	 * A hashmap of the {@link Chunk}s that make up the world. The Integer key is the x-position of the chunk in the world.
 	 */
-	private int[][] blockMap = new int[WIDTH][HEIGHT];
+	private HashMap<Integer, Chunk> chunks = new HashMap<Integer, Chunk>();
 
 	/**
 	 * A list of {@link DynamicEntity}s in the world.
@@ -44,27 +32,13 @@ public class World {
 	/**
 	 * The {@link EntityPlayer} in the world.
 	 */
-	public EntityPlayer player = (EntityPlayer) spawnEntityAt(new EntityPlayer(), new Vector2(10, 10));
+	public EntityPlayer player = (EntityPlayer) spawnEntityAt(new EntityPlayer(), new Vector2(0, 5));
 
 	public World() {
-		for (int[] xRow : blockMap)
-			Arrays.fill(xRow, 0);
-
-		for (int i = 0; i < World.WIDTH; i++) {
-			setBlockAt(Blocks.stone, new Vector2(i, 5));
+		for (int i = -8; i < 16; i++) {
+			Chunk chunk = new Chunk(i);
+			chunks.put(i, chunk);
 		}
-
-		for (int i = 5; i < 10; i++) {
-			setBlockAt(Blocks.stone, new Vector2(i, 6));
-		}
-	}
-
-	/**
-	 * Gets the 2D block map.
-	 * @return The block map.
-	 */
-	public int[][] getBlockMap() {
-		return this.blockMap;
 	}
 
 	/**
@@ -81,7 +55,7 @@ public class World {
 	 * @return The Block at that position.
 	 */
 	public Block getBlockAt(Vector2 pos) {
-		return BlockRegistry.getBlockForID(blockMap[(int) pos.x][(int) pos.y]);
+		return getChunkForPos(pos).getBlockAt(getChunkForPos(pos).convertWorldToChunkPos(pos));
 	}
 
 	/**
@@ -90,7 +64,8 @@ public class World {
 	 * @param pos The position in the world.
 	 */
 	public void setBlockAt(Block block, Vector2 pos) {
-		this.blockMap[(int) pos.x][(int) pos.y] = BlockRegistry.getIDForBlock(block);
+		Chunk chunk = getChunkForPos(pos);
+		chunk.setBlockAt(block, chunk.convertWorldToChunkPos(pos));
 	}
 
 	/**
@@ -104,5 +79,20 @@ public class World {
 		entity.setWorld(this);
 		getDynamicEntities().add(entity);
 		return entity;
+	}
+
+	public Chunk getChunkForPos(Vector2 pos) {
+		int x;
+		if (pos.x < 0) {
+			x = (int) (-1 * Math.ceil(Math.abs(pos.x) / Chunk.WIDTH));
+		} else {
+			x = (int) Math.floor(pos.x / Chunk.WIDTH);
+		}
+
+		return chunks.get(x);
+	}
+
+	public ArrayList<Chunk> getChunks() {
+		return new ArrayList<Chunk>(chunks.values());
 	}
 }

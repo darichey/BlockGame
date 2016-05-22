@@ -9,6 +9,7 @@ import com.darichey.blockgame.entity.Entity;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.entity.dynamic.DynamicEntity;
 import com.darichey.blockgame.world.World;
+import com.darichey.blockgame.world.chunk.Chunk;
 
 /**
  * Handles the rendering of the current {@link World}.
@@ -54,11 +55,14 @@ public class WorldRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
-		for (int x = 0; x < World.WIDTH; x++) {
-			for (int y = 0; y < World.HEIGHT; y++) {
-				Block block = world.getBlockAt(new Vector2(x, y));
-				if (block != null && entityCanBeeSeenAt(block, new Vector2(x, y))) {
-					batch.draw(block.texture, x, y, block.width, block.height);
+		for (Chunk chunk : world.getChunks()) {
+			for (int x = 0; x < Chunk.WIDTH; x++) {
+				for (int y = 0; y < Chunk.HEIGHT; y++) {
+					Vector2 worldPos = chunk.convertChunkToWorldPos(new Vector2(x, y));
+					Block block = world.getBlockAt(worldPos);
+					if (block != null && entityCanBeeSeenAt(block, worldPos)) {
+						batch.draw(block.texture, worldPos.x, worldPos.y, block.width, block.height);
+					}
 				}
 			}
 		}
