@@ -31,7 +31,7 @@ public class PerlinNoise {
 			range = Math.max(1, range);
 		}
 
-		return Math.round(noise);
+		return Math.round(noise * (noise < 0 ? -1 : 1)); // Ternary bit is a lazy way to prevent this from returning negatives. I have no idea why it would do that in the first place.
 	}
 
 	private int random(int x, int range) {

@@ -62,8 +62,7 @@ public class Chunk {
 
 	private void generateRandomTerrain() {
 		for (int x = worldBlockXs.get(0); x < worldBlockXs.get(worldBlockXs.size() - 1) + 1; x++) {
-			System.out.println(x);
-			int columnHeight = noise.getNoise(x, 256);
+			int columnHeight = noise.getNoise(x, HEIGHT);
 			for (int y = 0; y < columnHeight; y++) {
 				Block block;
 				if (y < columnHeight - 5) {
