@@ -4,14 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.entity.dynamic.DynamicEntity;
 import com.darichey.blockgame.entity.dynamic.EntityPlayer;
-import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.world.chunk.Chunk;
 import com.darichey.blockgame.world.generation.PerlinNoise;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -24,7 +21,7 @@ public class World {
 	 */
 	public static final int GRAVITY_VELOCITY = 25;
 
-	private static final int LOAD_RADIUS = 2;
+	public static final int LOAD_RADIUS = 2;
 
 	/**
 	 * A hashmap of the {@link Chunk}s that make up the world. The Integer key is the x-position of the chunk in the world.
@@ -41,18 +38,16 @@ public class World {
 	 */
 	public EntityPlayer player = (EntityPlayer) spawnEntityAt(new EntityPlayer(), new Vector2(0, 5));
 
-	PerlinNoise noise = new PerlinNoise(new Random().nextLong());
+	public PerlinNoise noise = new PerlinNoise(new Random().nextLong());
 
 	public World() {
 
-		for (int i = -8; i < 8; i++) {
-			Chunk chunk = new Chunk(i);
-			chunks.put(i, chunk);
+		for (int i = -2; i < 2; i++) {
+			addChunk(new Chunk(noise, i));
 		}
 
-		PerlinNoise noise = new PerlinNoise(new Random().nextLong());
-
-		for (int x = -128; x < 128; x++) {
+		/*
+		for (int x = -32; x < 32; x++) {
 			int columnHeight = noise.getNoise(x, 256);
 			for (int y = 0; y < columnHeight; y++) {
 				Block block;
@@ -68,6 +63,7 @@ public class World {
 				setBlockAt(block, new Vector2(x, y));
 			}
 		}
+		*/
 
 	}
 
@@ -85,7 +81,7 @@ public class World {
 	 * @return The Block at that position.
 	 */
 	public Block getBlockAt(Vector2 pos) {
-		return getChunkForPos(pos).getBlockAt(getChunkForPos(pos).convertWorldToChunkPos(pos));
+		return getChunkForWorldPos(pos).getBlockAt(getChunkForWorldPos(pos).convertWorldToChunkPos(pos));
 	}
 
 	/**
@@ -94,7 +90,7 @@ public class World {
 	 * @param pos The position in the world.
 	 */
 	public void setBlockAt(Block block, Vector2 pos) {
-		Chunk chunk = getChunkForPos(pos);
+		Chunk chunk = getChunkForWorldPos(pos);
 		chunk.setBlockAt(block, chunk.convertWorldToChunkPos(pos));
 	}
 
@@ -111,7 +107,7 @@ public class World {
 		return entity;
 	}
 
-	public Chunk getChunkForPos(Vector2 pos) {
+	public Chunk getChunkForWorldPos(Vector2 pos) {
 		int x;
 		if (pos.x < 0) {
 			x = (int) (-1 * Math.ceil(Math.abs(pos.x) / Chunk.WIDTH));
@@ -122,13 +118,17 @@ public class World {
 		return chunks.get(x);
 	}
 
+	public Chunk getChunkAt(int xPos) {
+		return chunks.get(xPos);
+	}
+
 	private ArrayList<Chunk> getChunks() {
 		return new ArrayList<Chunk>(chunks.values());
 	}
 
 	public ArrayList<Chunk> getLoadedChunks() {
 		ArrayList<Chunk> loadedChunks = new ArrayList<Chunk>(5);
-		int playerChunkPos = getChunkForPos(player.getPosition()).getPosition();
+		int playerChunkPos = getChunkForWorldPos(player.getPosition()).getPosition();
 
 		for (Chunk chunk : getChunks()) {
 			if (chunk.getPosition()  >= playerChunkPos - LOAD_RADIUS && chunk.getPosition() <= playerChunkPos + LOAD_RADIUS)
@@ -136,5 +136,9 @@ public class World {
 		}
 
 		return loadedChunks;
+	}
+
+	public void addChunk(Chunk chunk) {
+		chunks.put(chunk.getPosition(), chunk);
 	}
 }

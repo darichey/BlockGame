@@ -28,6 +28,7 @@ public class InputHandler extends InputAdapter implements IHandler {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector3 tempPos = WorldRenderer.camera.unproject(new Vector3(screenX, screenY, 0));
 		Vector2 worldPos = new Vector2((int) Math.floor(tempPos.x), (int) Math.floor(tempPos.y));
+		System.out.println(worldPos);
 		Block block = world.getBlockAt(worldPos);
 
 		if (block == null)  {

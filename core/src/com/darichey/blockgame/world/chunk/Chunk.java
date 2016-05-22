@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.register.BlockRegistry;
+import com.darichey.blockgame.world.generation.PerlinNoise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +41,10 @@ public class Chunk {
 	 */
 	private int[][] blockMap = new int[WIDTH][HEIGHT];
 
-	public Chunk(int xPos) {
+	private PerlinNoise noise;
+
+	public Chunk(PerlinNoise noise, int xPos) {
+		this.noise = noise;
 		this.xPos = xPos;
 
 		worldBlockXs.addAll(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
@@ -51,6 +55,29 @@ public class Chunk {
 
 		for (int[] xRow : blockMap)
 			Arrays.fill(xRow, 0);
+
+		generateRandomTerrain();
+		//generateTestTerrain();
+	}
+
+	private void generateRandomTerrain() {
+		for (int x = worldBlockXs.get(0); x < worldBlockXs.get(worldBlockXs.size() - 1) + 1; x++) {
+			System.out.println(x);
+			int columnHeight = noise.getNoise(x, 256);
+			for (int y = 0; y < columnHeight; y++) {
+				Block block;
+				if (y < columnHeight - 5) {
+					block = Blocks.stone;
+				} else if (y == columnHeight - 1) {
+					block = Blocks.grass;
+				} else {
+					block = Blocks.dirt;
+				}
+				if (y == 0) block = Blocks.bedrock;
+
+				setBlockAt(block, convertWorldToChunkPos(new Vector2(x, y)));
+			}
+		}
 	}
 
 	private void generateTestTerrain() {

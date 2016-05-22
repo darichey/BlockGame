@@ -28,11 +28,13 @@ public class GameScreen extends ScreenAdapter {
 		MovementHandler movementHandler = new MovementHandler(world.player);
 		CollisionHandler collisionHandler = new CollisionHandler(world);
 		GravityHandler gravityHandler = new GravityHandler(world);
+		GenerationHandler generationHandler = new GenerationHandler(world);
 
 		HandlerRegistry.register(inputHandler);
 		HandlerRegistry.register(movementHandler);
 		HandlerRegistry.register(collisionHandler);
 		HandlerRegistry.register(gravityHandler);
+		HandlerRegistry.register(generationHandler);
 		Gdx.input.setInputProcessor(inputHandler);
 	}
 

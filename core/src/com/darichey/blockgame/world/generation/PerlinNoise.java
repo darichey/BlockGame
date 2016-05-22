@@ -10,7 +10,7 @@ public class PerlinNoise {
 	}
 
 	public int getNoise(int x, int range) {
-		int selectionSize = Chunk.WIDTH  * 32; // The distance between the selected points
+		int selectionSize = Chunk.WIDTH  * 16; // The distance between the selected points
 		float noise = 0;
 
 		range /= 2;
