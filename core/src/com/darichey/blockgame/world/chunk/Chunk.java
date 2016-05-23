@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.register.BlockRegistry;
-import com.darichey.blockgame.world.generation.PerlinNoise;
+import com.darichey.blockgame.util.PerlinNoise;
 
 import java.util.ArrayList;
 import java.util.Arrays;

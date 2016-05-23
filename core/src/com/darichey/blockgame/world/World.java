@@ -5,7 +5,7 @@ import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.entity.dynamic.DynamicEntity;
 import com.darichey.blockgame.entity.dynamic.EntityPlayer;
 import com.darichey.blockgame.world.chunk.Chunk;
-import com.darichey.blockgame.world.generation.PerlinNoise;
+import com.darichey.blockgame.util.PerlinNoise;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,7 +122,7 @@ public class World {
 		return chunks.get(xPos);
 	}
 
-	private ArrayList<Chunk> getChunks() {
+	public ArrayList<Chunk> getChunks() {
 		return new ArrayList<Chunk>(chunks.values());
 	}
 

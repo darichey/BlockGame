@@ -1,4 +1,4 @@
-package com.darichey.blockgame.world.generation;
+package com.darichey.blockgame.util;
 
 import com.darichey.blockgame.world.chunk.Chunk;
 

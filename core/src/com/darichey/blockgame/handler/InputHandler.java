@@ -8,7 +8,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.darichey.blockgame.entity.block.Block;
 import com.darichey.blockgame.init.Blocks;
 import com.darichey.blockgame.render.WorldRenderer;
+import com.darichey.blockgame.util.WorldImage;
 import com.darichey.blockgame.world.World;
+
+import java.io.IOException;
 
 /**
  * Handles input from the mouse and keyboard.
@@ -36,6 +39,14 @@ public class InputHandler extends InputAdapter implements IHandler {
 			world.setBlockAt(null, worldPos);
 		}
 
+		/*
+		if (button == 0) {
+			world.setBlockAt(Blocks.red, worldPos);
+		} else {
+			world.setBlockAt(Blocks.black, worldPos);
+		}
+		*/
+
 		return false;
 	}
 
@@ -58,8 +69,23 @@ public class InputHandler extends InputAdapter implements IHandler {
 			world.player.getVelocity().add(0, 10);
 		}
 
+		// Walking
 		if (keycode == Input.Keys.SHIFT_LEFT) {
 			world.player.isWalking = true;
+		}
+
+		// WorldImage
+		if (keycode == Input.Keys.P) {
+			try {
+				new WorldImage(world).writeImage();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Teleport to (0,128)
+		if (keycode == Input.Keys.B) {
+			world.player.setPosition(new Vector2(0, 128));
 		}
 
 		return false;
