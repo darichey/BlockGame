@@ -64,11 +64,6 @@ public class InputHandler extends InputAdapter implements IHandler {
 			WorldRenderer.viewportHeight = 23;
 		}
 
-		// Jumping
-		if (keycode == Input.Keys.SPACE && world.player.isOnGround()) {
-			world.player.getVelocity().add(0, 10);
-		}
-
 		// Walking
 		if (keycode == Input.Keys.SHIFT_LEFT) {
 			world.player.isWalking = true;
@@ -108,6 +103,11 @@ public class InputHandler extends InputAdapter implements IHandler {
 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			world.player.getVelocity().set(-world.player.speed * (world.player.isWalking ? .5f : 1), world.player.getVelocity().y);
+		}
+
+		// Jumping
+		if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && world.player.isOnGround()) {
+			world.player.getVelocity().add(0, 10);
 		}
 	}
 }
